@@ -11,8 +11,7 @@ use Omnipay\Common\Message\AbstractRequest;
 /**
  * Omnipay WorldPay XML Purchase Request
  */
-class PurchaseRequest extends AbstractRequest
-{
+class PurchaseRequest extends AbstractRequest {
     const EP_HOST_LIVE = 'https://secure.worldpay.com';
     const EP_HOST_TEST = 'https://secure-test.worldpay.com';
 
@@ -33,8 +32,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getAcceptHeader()
-    {
+    public function getAcceptHeader() {
         return $this->getParameter('acceptHeader');
     }
 
@@ -46,8 +44,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setAcceptHeader($value)
-    {
+    public function setAcceptHeader($value) {
         return $this->setParameter('acceptHeader', $value);
     }
 
@@ -57,8 +54,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return \Guzzle\Plugin\Cookie\CookiePlugin
      */
-    public function getCookiePlugin()
-    {
+    public function getCookiePlugin() {
         return $this->cookiePlugin;
     }
 
@@ -68,8 +64,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getInstallation()
-    {
+    public function getInstallation() {
         return $this->getParameter('installation');
     }
 
@@ -81,8 +76,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setInstallation($value)
-    {
+    public function setInstallation($value) {
         return $this->setParameter('installation', $value);
     }
 
@@ -92,8 +86,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getMerchant()
-    {
+    public function getMerchant() {
         return $this->getParameter('merchant');
     }
 
@@ -105,8 +98,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setMerchant($value)
-    {
+    public function setMerchant($value) {
         return $this->setParameter('merchant', $value);
     }
 
@@ -116,8 +108,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getPaResponse()
-    {
+    public function getPaResponse() {
         return $this->getParameter('pa_response');
     }
 
@@ -129,8 +120,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setPaResponse($value)
-    {
+    public function setPaResponse($value) {
         return $this->setParameter('pa_response', $value);
     }
 
@@ -140,8 +130,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->getParameter('password');
     }
 
@@ -153,8 +142,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setPassword($value)
-    {
+    public function setPassword($value) {
         return $this->setParameter('password', $value);
     }
 
@@ -164,8 +152,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getRedirectCookie()
-    {
+    public function getRedirectCookie() {
         return $this->getParameter('redirect_cookie');
     }
 
@@ -177,8 +164,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setRedirectCookie($value)
-    {
+    public function setRedirectCookie($value) {
         return $this->setParameter('redirect_cookie', $value);
     }
 
@@ -188,8 +174,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getRedirectEcho()
-    {
+    public function getRedirectEcho() {
         return $this->getParameter('redirect_echo');
     }
 
@@ -201,8 +186,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setRedirectEcho($value)
-    {
+    public function setRedirectEcho($value) {
         return $this->setParameter('redirect_echo', $value);
     }
 
@@ -212,8 +196,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getSession()
-    {
+    public function getSession() {
         return $this->getParameter('session');
     }
 
@@ -225,8 +208,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setSession($value)
-    {
+    public function setSession($value) {
         return $this->setParameter('session', $value);
     }
 
@@ -236,8 +218,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getTermUrl()
-    {
+    public function getTermUrl() {
         return $this->getParameter('termUrl');
     }
 
@@ -249,8 +230,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setTermUrl($value)
-    {
+    public function setTermUrl($value) {
         return $this->setParameter('termUrl', $value);
     }
 
@@ -260,8 +240,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return string
      */
-    public function getUserAgentHeader()
-    {
+    public function getUserAgentHeader() {
         return $this->getParameter('userAgentHeader');
     }
 
@@ -273,8 +252,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return void
      */
-    public function setUserAgentHeader($value)
-    {
+    public function setUserAgentHeader($value) {
         return $this->setParameter('userAgentHeader', $value);
     }
 
@@ -284,8 +262,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return \SimpleXMLElement
      */
-    public function getData()
-    {
+    public function getData() {
         $this->validate('amount', 'card');
         $this->getCard()->validate();
 
@@ -328,10 +305,7 @@ class PurchaseRequest extends AbstractRequest
 
         $card->addChild('cardHolderName', $this->getCard()->getName());
 
-        if (
-                $this->getCard()->getBrand() == CreditCard::BRAND_MAESTRO
-             || $this->getCard()->getBrand() == CreditCard::BRAND_SWITCH
-        ) {
+        if ( in_array($this->getCard()->getBrand(), [CreditCard::BRAND_MAESTRO, CreditCard::BRAND_SWITCH]) ) {
             $start = $card->addChild('startDate')->addChild('date');
             $start->addAttribute('month', $this->getCard()->getStartDate('m'));
             $start->addAttribute('year', $this->getCard()->getStartDate('Y'));
@@ -346,38 +320,6 @@ class PurchaseRequest extends AbstractRequest
         $address->addChild('postalCode', $this->getCard()->getPostcode());
         $address->addChild('countryCode', $this->getCard()->getCountry());
 
-        $session = $payment->addChild('session');
-        $session->addAttribute('shopperIPAddress', $this->getClientIP());
-        $session->addAttribute('id', $this->getSession());
-
-        $paResponse = $this->getPaResponse();
-
-        if (!empty($paResponse)) {
-            $info3DSecure = $payment->addChild('info3DSecure');
-            $info3DSecure->addChild('paResponse', $paResponse);
-        }
-
-        $shopper = $order->addChild('shopper');
-
-        $email = $this->getCard()->getEmail();
-
-        if (!empty($email)) {
-            $shopper->addChild(
-                'shopperEmailAddress',
-                $this->getCard()->getEmail()
-            );
-        }
-
-        $browser = $shopper->addChild('browser');
-        $browser->addChild('acceptHeader', $this->getAcceptHeader());
-        $browser->addChild('userAgentHeader', $this->getUserAgentHeader());
-
-        $echoData = $this->getRedirectEcho();
-
-        if (!empty($echoData)) {
-            $order->addChild('echoData', $echoData);
-        }
-
         return $data;
     }
 
@@ -389,8 +331,7 @@ class PurchaseRequest extends AbstractRequest
      * @access public
      * @return RedirectResponse
      */
-    public function sendData($data)
-    {
+    public function sendData($data) {
         $implementation = new \DOMImplementation();
 
         $dtd = $implementation->createDocumentType(
@@ -405,14 +346,9 @@ class PurchaseRequest extends AbstractRequest
         $node = $document->importNode(dom_import_simplexml($data), true);
         $document->appendChild($node);
 
-        $authorisation = base64_encode(
-            $this->getMerchant() . ':' . $this->getPassword()
-        );
-
-        $headers = array(
-            'Authorization' => 'Basic ' . $authorisation,
+        $headers = [
             'Content-Type'  => 'text/xml; charset=utf-8'
-        );
+        ];
 
         $cookieJar = new ArrayCookieJar();
 
@@ -423,12 +359,12 @@ class PurchaseRequest extends AbstractRequest
 
             $cookieJar->add(
                 new Cookie(
-                    array(
+                    [
                         'domain' => $url['host'],
                         'name'   => 'machine',
                         'path'   => '/',
                         'value'  => $redirectCookie
-                    )
+                    ]
                 )
             );
         }
@@ -439,8 +375,10 @@ class PurchaseRequest extends AbstractRequest
 
         $xml = $document->saveXML();
 
+		$options = ['auth' => [$this->getMerchant(), $this->getPassword()]];
+
         $httpResponse = $this->httpClient
-            ->post($this->getEndpoint(), $headers, $xml)
+            ->post($this->getEndpoint(), $headers, $xml, $options)
             ->send();
 
         return $this->response = new RedirectResponse(
@@ -457,8 +395,7 @@ class PurchaseRequest extends AbstractRequest
      * @access protected
      * @return string
      */
-    protected function getEndpoint()
-    {
+    protected function getEndpoint() {
         if ($this->getTestMode()) {
             return self::EP_HOST_TEST . self::EP_PATH;
         }
