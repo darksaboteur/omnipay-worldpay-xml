@@ -272,7 +272,9 @@ class PurchaseRequest extends AbstractRequest {
 
         $order = $data->addChild('submit')->addChild('order');
         $order->addAttribute('orderCode', $this->getTransactionId());
-        $order->addAttribute('installationId', $this->getInstallation());
+        if (!empty($this->getInstallation())) {
+			$order->addAttribute('installationId', $this->getInstallation());
+		}
 
         $order->addChild('description', $this->getDescription());
 
