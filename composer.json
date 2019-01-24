@@ -1,5 +1,5 @@
 {
-    "name": "teaandcode/omnipay-worldpay-xml",
+    "name": "darksaboteur/omnipay-worldpay-xml",
     "type": "library",
     "description": "WorldPay XML driver for the Omnipay payment processing library",
     "keywords": [
@@ -10,27 +10,24 @@
         "worldpay",
         "payment"
     ],
-    "homepage": "https://github.com/teaandcode/omnipay-worldpay-xml",
+    "homepage": "https://github.com/darksaboteur/omnipay-worldpay-xml",
     "license": "MIT",
     "authors": [
         {
             "name": "Dave Nash",
             "email": "dave.nash@teaandcode.com"
+        },
+        {
+            "name": "Nicholas Brackley"
         }
     ],
     "autoload": {
         "psr-0": { "Omnipay\\WorldPayXML\\" : "src/" }
     },
     "require": {
-        "guzzle/plugin-cookie": "~3.7",
-        "omnipay/common": "~2.3"
+        "omnipay/common": "^3"
     },
     "require-dev": {
-        "omnipay/tests": "~2.0"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
+        "omnipay/tests": "^3"
     }
 }

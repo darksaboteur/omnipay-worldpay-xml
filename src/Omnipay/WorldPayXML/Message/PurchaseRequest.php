@@ -7,6 +7,8 @@ use Guzzle\Plugin\Cookie\CookiePlugin;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Message\AbstractRequest;
+use DOMImplementation;
+use SimpleXMLElement;
 
 /**
  * Omnipay WorldPay XML Purchase Request
@@ -260,21 +262,21 @@ class PurchaseRequest extends AbstractRequest {
      * Get data
      *
      * @access public
-     * @return \SimpleXMLElement
+     * @return SimpleXMLElement
      */
     public function getData() {
         $this->validate('amount', 'card');
         $this->getCard()->validate();
 
-        $data = new \SimpleXMLElement('<paymentService />');
+        $data = new SimpleXMLElement('<paymentService />');
         $data->addAttribute('version', self::VERSION);
         $data->addAttribute('merchantCode', $this->getMerchant());
 
         $order = $data->addChild('submit')->addChild('order');
         $order->addAttribute('orderCode', $this->getTransactionId());
         if (!empty($this->getInstallation())) {
-			$order->addAttribute('installationId', $this->getInstallation());
-		}
+          $order->addAttribute('installationId', $this->getInstallation());
+        }
 
         $order->addChild('description', $this->getDescription());
 
@@ -285,7 +287,7 @@ class PurchaseRequest extends AbstractRequest {
 
         $payment = $order->addChild('paymentDetails');
 
-        $codes = array(
+        $codes = [
             CreditCard::BRAND_AMEX        => 'AMEX-SSL',
             CreditCard::BRAND_DANKORT     => 'DANKORT-SSL',
             CreditCard::BRAND_DINERS_CLUB => 'DINERS-SSL',
@@ -296,7 +298,7 @@ class PurchaseRequest extends AbstractRequest {
             CreditCard::BRAND_MASTERCARD  => 'ECMC-SSL',
             CreditCard::BRAND_SWITCH      => 'MAESTRO-SSL',
             CreditCard::BRAND_VISA        => 'VISA-SSL'
-        );
+        ];
 
         $card = $payment->addChild($codes[$this->getCard()->getBrand()]);
         $card->addChild('cardNumber', $this->getCard()->getNumber());
@@ -328,13 +330,13 @@ class PurchaseRequest extends AbstractRequest {
     /**
      * Send data
      *
-     * @param \SimpleXMLElement $data Data
+     * @param SimpleXMLElement $data Data
      *
      * @access public
      * @return RedirectResponse
      */
     public function sendData($data) {
-        $implementation = new \DOMImplementation();
+        $implementation = new DOMImplementation();
 
         $dtd = $implementation->createDocumentType(
             'paymentService',
@@ -377,15 +379,19 @@ class PurchaseRequest extends AbstractRequest {
 
         $xml = $document->saveXML();
 
-		$options = ['auth' => [$this->getMerchant(), $this->getPassword()]];
+        $options = [
+                    'auth' => [
+                      $this->getMerchant(),
+                      $this->getPassword()
+                    ]
+                  ];
 
         $httpResponse = $this->httpClient
-            ->post($this->getEndpoint(), $headers, $xml, $options)
-            ->send();
+            ->request('POST', $this->getEndpoint(), $headers, $xml, $options);
 
         return $this->response = new RedirectResponse(
             $this,
-            $httpResponse->getBody()
+            $httpResponse->getBody()->getContents()
         );
     }
 
@@ -401,7 +407,6 @@ class PurchaseRequest extends AbstractRequest {
         if ($this->getTestMode()) {
             return self::EP_HOST_TEST . self::EP_PATH;
         }
-
         return self::EP_HOST_LIVE . self::EP_PATH;
     }
 }

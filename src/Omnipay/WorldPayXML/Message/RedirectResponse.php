@@ -7,16 +7,14 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 /**
  * WorldPay XML Redirect Response
  */
-class RedirectResponse extends Response implements RedirectResponseInterface
-{
+class RedirectResponse extends Response implements RedirectResponseInterface {
     /**
      * Get redirect cookie
      *
      * @access public
      * @return string
      */
-    public function getRedirectCookie()
-    {
+    public function getRedirectCookie() {
         $cookieJar = $this->request->getCookiePlugin()->getCookieJar();
 
         foreach ($cookieJar->all() as $cookie) {
@@ -34,8 +32,7 @@ class RedirectResponse extends Response implements RedirectResponseInterface
      * @access public
      * @return string
      */
-    public function getRedirectEcho()
-    {
+    public function getRedirectEcho() {
         return $this->data->echoData;
     }
 
@@ -45,12 +42,11 @@ class RedirectResponse extends Response implements RedirectResponseInterface
      * @access public
      * @return array
      */
-    public function getRedirectData()
-    {
-        return array(
+    public function getRedirectData() {
+        return [
             'PaReq'   => $this->data->requestInfo->request3DSecure->paRequest,
             'TermUrl' => $this->request->getTermUrl()
-        );
+        ];
     }
 
     /**
@@ -59,8 +55,7 @@ class RedirectResponse extends Response implements RedirectResponseInterface
      * @access public
      * @return string
      */
-    public function getRedirectMethod()
-    {
+    public function getRedirectMethod() {
         return 'POST';
     }
 
@@ -70,8 +65,7 @@ class RedirectResponse extends Response implements RedirectResponseInterface
      * @access public
      * @return string
      */
-    public function getRedirectUrl()
-    {
+    public function getRedirectUrl() {
         return $this->data->requestInfo->request3DSecure->issuerURL;
     }
 }

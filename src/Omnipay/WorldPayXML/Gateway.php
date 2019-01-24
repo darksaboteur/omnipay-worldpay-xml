@@ -9,16 +9,14 @@ use Omnipay\Common\AbstractGateway;
  *
  * @link http://www.worldpay.com/support/bg/xml/kb/dxml_inv.pdf
  */
-class Gateway extends AbstractGateway
-{
+class Gateway extends AbstractGateway {
     /**
      * Get name
      *
      * @access public
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'WorldPayXML';
     }
 
@@ -28,14 +26,13 @@ class Gateway extends AbstractGateway
      * @access public
      * @return array
      */
-    public function getDefaultParameters()
-    {
-        return array(
+    public function getDefaultParameters() {
+        return [
             'installation' => '',
             'merchant'     => '',
             'password'     => '',
             'testMode'     => false,
-        );
+        ];
     }
 
     /**
@@ -44,8 +41,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getAcceptHeader()
-    {
+    public function getAcceptHeader() {
         return $this->getParameter('acceptHeader');
     }
 
@@ -57,8 +53,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setAcceptHeader($value)
-    {
+    public function setAcceptHeader($value) {
         return $this->setParameter('acceptHeader', $value);
     }
 
@@ -68,8 +63,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getInstallation()
-    {
+    public function getInstallation() {
         return $this->getParameter('installation');
     }
 
@@ -81,8 +75,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setInstallation($value)
-    {
+    public function setInstallation($value) {
         return $this->setParameter('installation', $value);
     }
 
@@ -92,8 +85,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getMerchant()
-    {
+    public function getMerchant() {
         return $this->getParameter('merchant');
     }
 
@@ -105,8 +97,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setMerchant($value)
-    {
+    public function setMerchant($value) {
         return $this->setParameter('merchant', $value);
     }
 
@@ -116,8 +107,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getPaResponse()
-    {
+    public function getPaResponse() {
         return $this->getParameter('pa_response');
     }
 
@@ -129,8 +119,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setPaResponse($value)
-    {
+    public function setPaResponse($value) {
         return $this->setParameter('pa_response', $value);
     }
 
@@ -140,8 +129,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->getParameter('password');
     }
 
@@ -153,8 +141,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setPassword($value)
-    {
+    public function setPassword($value) {
         return $this->setParameter('password', $value);
     }
 
@@ -164,8 +151,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getRedirectCookie()
-    {
+    public function getRedirectCookie() {
         return $this->getParameter('redirect_cookie');
     }
 
@@ -177,8 +163,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setRedirectCookie($value)
-    {
+    public function setRedirectCookie($value) {
         return $this->setParameter('redirect_cookie', $value);
     }
 
@@ -188,8 +173,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getRedirectEcho()
-    {
+    public function getRedirectEcho() {
         return $this->getParameter('redirect_echo');
     }
 
@@ -201,8 +185,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setRedirectEcho($value)
-    {
+    public function setRedirectEcho($value) {
         return $this->setParameter('redirect_echo', $value);
     }
 
@@ -212,8 +195,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getSession()
-    {
+    public function getSession() {
         return $this->getParameter('session');
     }
 
@@ -225,8 +207,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setSession($value)
-    {
+    public function setSession($value) {
         return $this->setParameter('session', $value);
     }
 
@@ -236,8 +217,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getUserAgentHeader()
-    {
+    public function getUserAgentHeader() {
         return $this->getParameter('userAgentHeader');
     }
 
@@ -249,8 +229,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setUserAgentHeader($value)
-    {
+    public function setUserAgentHeader($value) {
         return $this->setParameter('userAgentHeader', $value);
     }
 
@@ -260,8 +239,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return string
      */
-    public function getUserIP()
-    {
+    public function getUserIP() {
         return $this->getParameter('userIP');
     }
 
@@ -273,8 +251,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return void
      */
-    public function setUserIP($value)
-    {
+    public function setUserIP($value) {
         return $this->setParameter('userIP', $value);
     }
 
@@ -286,8 +263,7 @@ class Gateway extends AbstractGateway
      * @access public
      * @return \Omnipay\WorldPayXML\Message\PurchaseRequest
      */
-    public function purchase(array $parameters = array())
-    {
+    public function purchase(array $parameters = []) {
         return $this->createRequest(
             '\Omnipay\WorldPayXML\Message\PurchaseRequest',
             $parameters

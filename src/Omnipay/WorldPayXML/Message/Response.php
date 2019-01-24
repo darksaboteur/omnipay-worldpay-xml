@@ -10,8 +10,7 @@ use Omnipay\Common\Message\RequestInterface;
 /**
  * WorldPay XML Response
  */
-class Response extends AbstractResponse
-{
+class Response extends AbstractResponse {
     /**
      * Constructor
      *
@@ -20,8 +19,7 @@ class Response extends AbstractResponse
      *
      * @access public
      */
-    public function __construct(RequestInterface $request, $data)
-    {
+    public function __construct(RequestInterface $request, $data) {
         $this->request = $request;
 
         if (empty($data)) {
@@ -42,8 +40,7 @@ class Response extends AbstractResponse
      * @access public
      * @return string
      */
-    public function getMessage()
-    {
+    public function getMessage() {
         $codes = array(
             0  => 'AUTHORISED',
             2  => 'REFERRED',
@@ -121,8 +118,7 @@ class Response extends AbstractResponse
      * @access public
      * @return string
      */
-    public function getTransactionReference()
-    {
+    public function getTransactionReference() {
         $attributes = $this->data->attributes();
 
         if (isset($attributes['orderCode'])) {
@@ -136,8 +132,7 @@ class Response extends AbstractResponse
      * @access public
      * @return boolean
      */
-    public function isRedirect()
-    {
+    public function isRedirect() {
         if (isset($this->data->requestInfo->request3DSecure->issuerURL)) {
             return true;
         }
@@ -151,8 +146,7 @@ class Response extends AbstractResponse
      * @access public
      * @return boolean
      */
-    public function isSuccessful()
-    {
+    public function isSuccessful() {
         if (isset($this->data->payment->lastEvent)) {
             if (strtoupper($this->data->payment->lastEvent) == 'AUTHORISED') {
                 return true;
