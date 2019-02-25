@@ -2,7 +2,6 @@
 
 namespace Omnipay\WorldPayXML\Message;
 
-use GuzzleHttp\Cookie\CookieJar;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Message\AbstractRequest;
 use DOMImplementation;
@@ -333,28 +332,29 @@ class PurchaseRequest extends AbstractRequest {
 
         $redirectCookie = $this->getRedirectCookie();
 
-        $cookieJar = new CookieJar;
+        $cookie = '';
         if (!empty($redirectCookie)) {
             $url = parse_url($this->getEndpoint());
-            $cookieJar = CookieJar::fromArray(['machine' => $redirectCookie], $url['host']);
+            $cookie = 'machine='.$redirectCookie.'; Domain='.$url['host']. '; Path=/';
         }
-
-        $headers = [
-            'Content-Type'  => 'text/xml; charset=utf-8',
-            'cookies' => $cookieJar,
-        ];
 
         $xml = $document->saveXML();
 
-        $options = [
-                    'auth' => [
-                      $this->getMerchant(),
-                      $this->getPassword()
-                    ]
-                  ];
+        $authorisation = base64_encode(
+            $this->getMerchant() . ':' . $this->getPassword()
+        );
+
+        $headers = [
+            'Content-Type'  => 'text/xml; charset=utf-8',
+            'Authorization' => 'Basic ' . $authorisation,
+        ];
+
+        if ($cookie) {
+          $headers['Set-Cookie'] = $cookie;
+        }
 
         $httpResponse = $this->httpClient
-            ->request('POST', $this->getEndpoint(), $headers, $xml, $options);
+            ->request('POST', $this->getEndpoint(), $headers, $xml);
 
         return $this->response = new RedirectResponse(
             $this,
