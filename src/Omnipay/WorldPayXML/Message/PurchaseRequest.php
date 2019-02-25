@@ -2,9 +2,7 @@
 
 namespace Omnipay\WorldPayXML\Message;
 
-use Guzzle\Plugin\Cookie\Cookie;
-use Guzzle\Plugin\Cookie\CookiePlugin;
-use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
+use GuzzleHttp\Cookie\CookieJar;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Message\AbstractRequest;
 use DOMImplementation;
@@ -20,13 +18,6 @@ class PurchaseRequest extends AbstractRequest {
     const EP_PATH = '/jsp/merchant/xml/paymentService.jsp';
 
     const VERSION = '1.4';
-
-    /**
-     * @var \Guzzle\Plugin\Cookie\CookiePlugin
-     *
-     * @access protected
-     */
-    protected $cookiePlugin;
 
     /**
      * Get accept header
@@ -48,16 +39,6 @@ class PurchaseRequest extends AbstractRequest {
      */
     public function setAcceptHeader($value) {
         return $this->setParameter('acceptHeader', $value);
-    }
-
-    /**
-     * Get cookie plugin
-     *
-     * @access public
-     * @return \Guzzle\Plugin\Cookie\CookiePlugin
-     */
-    public function getCookiePlugin() {
-        return $this->cookiePlugin;
     }
 
     /**
@@ -350,32 +331,18 @@ class PurchaseRequest extends AbstractRequest {
         $node = $document->importNode(dom_import_simplexml($data), true);
         $document->appendChild($node);
 
-        $headers = [
-            'Content-Type'  => 'text/xml; charset=utf-8'
-        ];
-
-        $cookieJar = new ArrayCookieJar();
-
         $redirectCookie = $this->getRedirectCookie();
 
+        $cookieJar = new CookieJar;
         if (!empty($redirectCookie)) {
             $url = parse_url($this->getEndpoint());
-
-            $cookieJar->add(
-                new Cookie(
-                    [
-                        'domain' => $url['host'],
-                        'name'   => 'machine',
-                        'path'   => '/',
-                        'value'  => $redirectCookie
-                    ]
-                )
-            );
+            $cookieJar = CookieJar::fromArray(['machine' => $redirectCookie], $url['host']);
         }
 
-        $this->cookiePlugin = new CookiePlugin($cookieJar);
-
-        $this->httpClient->addSubscriber($this->cookiePlugin);
+        $headers = [
+            'Content-Type'  => 'text/xml; charset=utf-8',
+            'cookies' => $cookieJar,
+        ];
 
         $xml = $document->saveXML();
 
